@@ -32,16 +32,18 @@ public class BootstrapContext {
 
     @PostConstruct
     public void init() {
+        String bot = String.format("telegram:bots?authorizationToken=%s&chatId=%s", authorizationToken, chatId);
 
         try {
             context.addRoutes(new RouteBuilder() {
                 @Override
                 public void configure() {
-                    from("timer://timer1?period=1000")
+                    from(bot)
+                        .log("${body}")
                         .setBody()
                         .simple("Camel")
                         .bean(OutgoingStickerMessageGenerator::new, "sendMessage")
-                        .to(String.format("telegram:bots?authorizationToken=%s&chatId=%s", authorizationToken, chatId));
+                        .to(bot);
                 }
             });
             context.start();

@@ -8,8 +8,8 @@ import org.apache.camel.component.telegram.model.OutgoingStickerMessage;
 @Named
 public class OutgoingStickerMessageGenerator {
     public OutgoingStickerMessage sendMessage(@Body String stickerId) {
-        OutgoingStickerMessage om =  new OutgoingStickerMessage();
-        om.setSticker("CAADAgADOQADfyesDlKEqOOd72VKAg"); // stickerId
-        return om;
+        return OutgoingStickerMessage.createWithFileId(
+            "CAADBAADEQADmDVxAkmg3XnDZam0FgQ", null, null, null
+        );
     }
 }
