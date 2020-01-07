@@ -44,10 +44,6 @@
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <logstash-logback.version>5.1</logstash-logback.version>
-        <slf4j.version>1.7.26</slf4j.version>
-        <logback.version>1.2.3</logback.version>
-        <logback.json>0.1.5</logback.json>
-        <camel.version>3.1.0-SNAPSHOT</camel.version>
         <java.min.version>11</java.min.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

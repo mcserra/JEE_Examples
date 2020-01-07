@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  backend:
+    #container_name: price-service_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8037:8080"
+      - "9037:9009"
+      - "4837:4848"
+    restart: always
+    entrypoint:
+      - java
+      - -Xdebug
+      - -Xrunjdwp:transport=dt_socket,address=*:9009,server=y,suspend=n
+      - -jar
+      - /opt/payara/payara-micro.jar
+    command: ["--deploy", "/opt/payara/activemq.rar", "--deploy", "/opt/payara/deployments/ROOT.war"]
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge

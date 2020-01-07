@@ -9,9 +9,6 @@
         <module>publisher-subscriber</module>
     </modules>
     <packaging>pom</packaging>
-    <build>
-        <finalName>jeeexamples</finalName>
-    </build>
     <dependencies>
         <dependency>
             <groupId>org.eclipse.microprofile</groupId>
@@ -52,5 +49,20 @@
         <slf4j.version>1.7.26</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <logback.json>0.1.5</logback.json>
+        <camel.version>3.1.0-SNAPSHOT</camel.version>
     </properties>
+    <build>
+        <finalName>ROOT</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
