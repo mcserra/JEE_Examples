@@ -1,0 +1,8 @@
+create-resource-adapter-config --property ServerUrl=tcp\://${ENV=JMS_HOST}\:${ENV=JMS_PORT}:UserName=${ENV=JMS_USER}:Password=${ENV=JMS_PASS} ${ENV=JMS_RESOURCE_ADAPTER_NAME}
+create-connector-connection-pool --raname ${ENV=JMS_RESOURCE_ADAPTER_NAME} --connectiondefinition javax.jms.ConnectionFactory jms/myConnectionPool
+create-connector-resource --poolname jms/myConnectionPool jms/myConnectionFactory
+create-admin-object --raname ${ENV=JMS_RESOURCE_ADAPTER_NAME} --restype javax.jms.Queue --property PhysicalName=${GROUP_QUEUE} jms/lookup/${GROUP_QUEUE}
+create-system-properties jms.test.queue=${ENV=GROUP_QUEUE}
+create-system-properties jms.resource.adapter=${ENV=JMS_RESOURCE_ADAPTER_NAME}
+deploy deployments/ROOT.war
+

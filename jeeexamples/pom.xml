@@ -7,6 +7,7 @@
     <modules>
         <module>camel</module>
         <module>publisher-subscriber</module>
+        <module>mdb-payara-micro</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>
