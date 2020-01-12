@@ -1,5 +1,6 @@
 package com.pubsub;
 
+import java.time.Instant;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -7,39 +8,42 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.RouteBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.apache.camel.component.jms.JmsComponent.jmsComponentAutoAcknowledge;
-
 @Startup
 @Singleton
-public class JmsReceiver {
+public class JmsPubSub {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JmsReceiver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JmsPubSub.class);
 
     @Inject
+    @JmsProcessor
     CamelContext context;
 
     @PostConstruct
     public void init() {
+
+        LOGGER.info("PROCESSOR");
         final String queue = "jms:queue:Stocks.Prices";
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();
-        connectionFactory.setUserName("admin");
-        connectionFactory.setPassword("admin");
-        connectionFactory.setBrokerURL("tcp://docker.for.mac.localhost:61616");
-        context.addComponent("jms", jmsComponentAutoAcknowledge(connectionFactory));
         try {
             context.addRoutes(new RouteBuilder() {
                 @Override
                 public void configure() {
-                    from("timer://foo?fixedRate=true&period=6000")
+                    from("timer://foo?fixedRate=true&period=1000")
                         .setBody(simple("Hello"))
-                        .log("${body}")
+                        .log("${body} " + Instant.now())
                         .to(queue);
+                }
+            });
+            context.addRoutes(new RouteBuilder() {
+                @Override
+                public void configure() {
+                    from(queue)
+                        .bean(ProcessorBean::new, "process")
+                        .log("ended: " + Instant.now());
                 }
             });
             context.start();
