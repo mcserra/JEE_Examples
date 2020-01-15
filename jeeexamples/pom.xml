@@ -8,6 +8,7 @@
         <module>camel</module>
         <module>publisher-subscriber</module>
         <module>mdb-payara-micro</module>
+        <module>camel-telegram-bot</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>
