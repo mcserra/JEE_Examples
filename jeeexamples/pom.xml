@@ -9,6 +9,7 @@
         <module>publisher-subscriber</module>
         <module>mdb-payara-micro</module>
         <module>camel-telegram-bot</module>
+        <module>interceptors</module>
     </modules>
     <packaging>pom</packaging>
     <dependencies>
