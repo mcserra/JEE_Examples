@@ -7,7 +7,9 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import org.apache.camel.CamelContext;
+import org.apache.camel.Predicate;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.telegram.model.IncomingInlineQuery;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,9 +40,11 @@ public class BootstrapContext {
                 @Override
                 public void configure() {
                     from(bot)
-                        .log("${body}")
-                        .bean(InlineQueryProcessorPhoto::new, "process")
-                        .to(bot);
+                        .choice()
+                        .when(bodyTypeIs(IncomingInlineQuery.class))
+                            .bean(InlineQueryProcessor.class, "process")
+                            .to(bot)
+                        .otherwise();
                 }
             });
             context.start();
@@ -48,6 +52,10 @@ public class BootstrapContext {
         } catch (Exception ex) {
             LOGGER.info(String.format("Error creating CC: %s", ex.getMessage()));
         }
+    }
+
+    private Predicate bodyTypeIs(Class<?> o) {
+        return e -> e.getIn().getBody().getClass().isAssignableFrom(o);
     }
 
     @PreDestroy
