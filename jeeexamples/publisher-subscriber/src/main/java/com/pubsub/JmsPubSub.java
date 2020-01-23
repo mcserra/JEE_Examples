@@ -42,7 +42,7 @@ public class JmsPubSub {
                 @Override
                 public void configure() {
                     from(queue)
-                        .bean(ProcessorBean::new, "process")
+                        .bean(ProcessorBean.class, "process")
                         .log("ended: " + Instant.now());
                 }
             });

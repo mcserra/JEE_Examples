@@ -8,9 +8,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8037:8080"
-      - "9037:9009"
-      - "4837:4848"
+      - "8019:8080"
+      - "9019:9009"
+      - "4819:4848"
     restart: always
     entrypoint:
       - java
