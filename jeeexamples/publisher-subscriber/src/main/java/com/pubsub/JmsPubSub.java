@@ -4,7 +4,7 @@ import java.time.Instant;
 
 import org.apache.camel.builder.RouteBuilder;
 
-public class JmsPubSub extends RouteBuilder{
+public class JmsPubSub extends RouteBuilder {
     private static final String queue = "jms:queue:Stocks.Prices";
 
     @Override

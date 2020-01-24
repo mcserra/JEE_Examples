@@ -11,6 +11,9 @@
     <packaging>war</packaging>
     <artifactId>camel-telegram-bot</artifactId>
 
+    <properties>
+        <camel.version>3.1.0-SNAPSHOT</camel.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.camel</groupId>
